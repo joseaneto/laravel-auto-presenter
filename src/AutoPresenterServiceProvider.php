@@ -64,7 +64,10 @@ class AutoPresenterServiceProvider extends ServiceProvider
     protected function setupEventListening(Container $app)
     {
         $app['events']->listen('content.rendering', function (View $view) use ($app) {
-            if ($viewData = array_merge($view->getFactory()->getShared(), $view->getData())) {
+            // Get the shared and view-specific data merged together
+            $viewData = array_merge($view->getFactory()->getShared(), $view->getData());
+            
+            if (!empty($viewData)) {
                 $decorator = $app['autopresenter'];
                 foreach ($viewData as $key => $value) {
                     $view[$key] = $decorator->decorate($value);

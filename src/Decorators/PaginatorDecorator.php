@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace McCool\LaravelAutoPresenter\Decorators;
 
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Pagination\AbstractPaginator;
 use McCool\LaravelAutoPresenter\AutoPresenter;
 use ReflectionObject;
 
@@ -72,7 +73,8 @@ class PaginatorDecorator implements DecoratorInterface
     /**
      * Decorate a paginator instance.
      *
-     * We're using hacky reflection for now because there is no public getter.
+     * We're using reflection because the property might be protected.
+     * This approach works across multiple Laravel versions.
      *
      * @param \Illuminate\Contracts\Pagination\Paginator $subject
      *
